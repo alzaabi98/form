@@ -12,7 +12,11 @@
           <option value="backend">backend</option>
           <option value="both">both</option>
       </select>
+      
+      <p> {{ message }}</p>
       <hr />
+
+
 
       <button class="btn btn-primary my-2" @click="addLang">Add</button>
     </div>
@@ -49,11 +53,19 @@ export default {
         { name: "Vue", type: "frontend" },
       ],
       newLang: "",
-      type: 'frontend'
+      type: 'frontend',
+      message: "You Have Selected : "
+
   
     };
   },
-
+watch: {
+    type(newVal, oldVal) {
+        console.log(newVal, oldVal)
+        this.message = "You Have Selected : "
+        this.message = this.message + newVal
+    }
+},
 computed: {
 
     frontendLangs() {
