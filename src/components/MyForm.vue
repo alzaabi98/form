@@ -8,41 +8,30 @@
         @keydown.enter="langs.push(newLang)"
       />
       <select v-model="type" class="form-select my-2">
-          <option value="frontend">frontend</option>
-          <option value="backend">backend</option>
-          <option value="both">both</option>
+        <option value="frontend">frontend</option>
+        <option value="backend">backend</option>
+        <option value="both">both</option>
       </select>
-      
-      <p> {{ message }}</p>
+
+      <p>{{ message }}</p>
       <hr />
-
-
 
       <button class="btn btn-primary my-2" @click="addLang">Add</button>
     </div>
     <div class="col-md-8">
-      <ul class="list-group">
-        <li v-for="(lang, index) in langs" :key="index" class="list-group-item">
-          <div class="d-flex justify-content-between">
-            <p class="badge" :class="typeClass(lang.type)">
-              {{ lang.name }}
-            </p>
-            <button class="btn" @click="removeLang(index)">X</button>
-          </div>
-        </li>
-      </ul>
-      <hr>
-      <p>Total Fronend Languages:  <strong> {{ frontendLangs }}</strong></p>
-
+      <lang-list :langs="langs"></lang-list>
     </div>
   </div>
 </template>
 
 <script>
+import LangList from "./LangList.vue";
 export default {
+  components: {
+    LangList,
+  },
   data() {
     return {
-
       langs: [
         { name: "PHP", type: "backend" },
         { name: "JAVASCRIPT", type: "frontend" },
@@ -53,33 +42,19 @@ export default {
         { name: "Vue", type: "frontend" },
       ],
       newLang: "",
-      type: 'frontend',
-      message: "You Have Selected : "
-
-  
+      type: "frontend",
+      message: "You Have Selected : ",
     };
   },
-watch: {
+  watch: {
     type(newVal, oldVal) {
-        console.log(newVal, oldVal)
-        this.message = "You Have Selected : "
-        this.message = this.message + newVal
-    }
-},
-computed: {
+      console.log(newVal, oldVal);
+      this.message = "You Have Selected : ";
+      this.message = this.message + newVal;
+    },
+  },
 
-    frontendLangs() {
-        let count = 0
-        this.langs.map( (lang) => {
-            if( lang.type == 'frontend') {
-                count++
-            }
-        })
-        return  count
-    }
-
-},
-methods: {
+  methods: {
     addLang() {
       if (this.newLang.length > 0) {
         this.langs.push({
@@ -92,20 +67,10 @@ methods: {
     removeLang(index) {
       this.langs.splice(index, 1);
     },
-    typeClass(type) {
-      if (type == "backend") {
-        return "bg-primary";
-      } else if (type == "frontend") {
-        return "bg-success";
-      } else {
-        return "bg-warning";
-      }
-    },
   },
 };
 </script>
 
 
 <style scoped>
-
 </style>
